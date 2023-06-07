@@ -64,7 +64,7 @@ const App = () => {
       <Button onClick={switchShowAllTasks}>{showAllTasksLabel}</Button>
       <ul>
         {filteredTasks.map((task) => (
-          <TaskCard key={task.ID} task={task} updateTasks={updateTasks} />
+          <TaskCard key={task.id} task={task} updateTasks={updateTasks} />
         ))}
       </ul>
       <CreateTaskModal

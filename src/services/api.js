@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASEURL = "http://localhost:8080";
+const BASEURL = "http://localhost:8082";
 
 export const createTask = async (title, daily, endDate) => {
   const response = await axios.post(BASEURL + "/tasks", {
@@ -20,3 +20,8 @@ export const getTasks = async () => {
   const res = await axios.get(BASEURL + "/tasks");
   return res.data;
 };
+
+export const markTaskAsDone = async (id, done) => {
+  const response = await axios.patch(BASEURL + "/tasks/" + id, {done});
+  return response.data;
+}

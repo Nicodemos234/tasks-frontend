@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { deleteTask } from "../services";
+import { deleteTask, markTaskAsDone } from "../services";
 import { styled } from "styled-components";
 import { Button } from "../styles";
 
@@ -11,19 +11,26 @@ const Wrapper = styled.li`
   display: flex;
   align-items: center;
   gap: 16px;
+  ${({ done }) => (done ? "text-decoration: line-through; filter: grayscale(100%)" : "")}
 `;
 
 export const TaskCard = ({ task, updateTasks }) => {
   const handleDeleteTask = useCallback(() => {
-    deleteTask(task.ID).then(() => {
+    deleteTask(task.id).then(() => {
       updateTasks();
     });
-  }, [task.ID, updateTasks]);
+  }, [task.id, updateTasks]);
+
+  const handleMarkTaskAsDone = useCallback(() => {
+    markTaskAsDone(task.id, !task.done).then(() => {
+      updateTasks();
+    });
+  }, [task.done, task.id, updateTasks]);
   return (
-    <Wrapper>
+    <Wrapper done={task.done}>
       {task.title}
       <Button onClick={handleDeleteTask}>Excluir</Button>
-      <Button>Concluir</Button>
+      <Button onClick={handleMarkTaskAsDone}>Concluir</Button>
     </Wrapper>
   );
 };
